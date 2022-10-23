@@ -16,7 +16,7 @@ import com.ecangussu.springmongo.services.UserService;
 public class UserResource {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<User>> findAll() {
