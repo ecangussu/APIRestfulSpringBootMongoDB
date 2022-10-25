@@ -10,22 +10,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.ecangussu.springmongo.resources.UserResource;
 
-@Document //forma do spring saber que se trata de uma collection do MongoDB
+@Document // forma do spring saber que se trata de uma collection do MongoDB
 //@Document(collection="user") poderia informar assim, mas o spring consegue mapear por ter o mesmo nome
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String id;
 	private String name;
 	private String email;
-	
+
 	private List<UserResource> list = new ArrayList<>();
-	
+
 	public User() {
 	}
-	
+
 	public User(String id, String name, String email) {
 		this.id = id;
 		this.name = name;
@@ -55,7 +55,7 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public List<UserResource> getList() {
 		return this.list;
 	}
@@ -76,5 +76,5 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }
