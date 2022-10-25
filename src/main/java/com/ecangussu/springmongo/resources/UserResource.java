@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +40,7 @@ public class UserResource {
 		return ResponseEntity.ok().body(userDTO);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST) // @PostMapping
 	public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO) {
 		User user = userService.fromDTO(userDTO);
 		user = userService.insert(user);
@@ -48,5 +50,13 @@ public class UserResource {
 		// Reposta vazia (void), código 201 (created) e com cabeçalho (uri)
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE) // @DeleteMapping
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		userService.delete(id);
+		// Código 204 = quando não precisa retornar nada
+		return ResponseEntity.noContent().build();
+	}
+	
 
 }
