@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.ecangussu.springmongo.resources.UserResource;
 
 @Document // forma do spring saber que se trata de uma collection do MongoDB
 //@Document(collection="user") poderia informar assim, mas o spring consegue mapear por ter o mesmo nome
@@ -21,7 +20,11 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 
-	private List<UserResource> list = new ArrayList<>();
+	@DBRef(lazy = true)
+	// DBRef -> atributo posts está referenciando outra collection do mongodb
+	// lazy = true -> os posts só serão carregados se os acessarmos diretamente,
+	// caso contrário só serão carregados os demais atributos
+	private List<Post> posts = new ArrayList<>();
 
 	public User() {
 	}
@@ -56,8 +59,8 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public List<UserResource> getList() {
-		return this.list;
+	public List<Post> getPosts() {
+		return this.posts;
 	}
 
 	@Override
