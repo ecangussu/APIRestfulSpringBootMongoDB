@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.ecangussu.springmongo.domain.Post;
 import com.ecangussu.springmongo.domain.User;
 import com.ecangussu.springmongo.dto.AuthorDTO;
+import com.ecangussu.springmongo.dto.CommentDTO;
 import com.ecangussu.springmongo.repositories.PostRepository;
 import com.ecangussu.springmongo.repositories.UserRepository;
 
@@ -41,11 +42,18 @@ public class Instantiation implements CommandLineRunner {
 
 		Post post1 = new Post(null, sdf.parse("25/10/2022"), "Jogo do título!",
 				"Palmeiras pode ganhar seu 11º título brasileiro hoje!", new AuthorDTO(estevao));
-		Post post2 = new Post(null, sdf.parse("17/11/2013"), "20 anos!", "Hoje completo 20 anos!",
+		Post post2 = new Post(null, sdf.parse("17/11/2022"), "29 anos!", "Hoje farei 29 anos!",
 				new AuthorDTO(estevao));
-
-		postRepository.saveAll(Arrays.asList(post1, post2));
 		
+		CommentDTO comment1 = new CommentDTO("É isso aí, vai parmera!", sdf.parse("26/10/2022"), new AuthorDTO(alex));
+		CommentDTO comment2 = new CommentDTO("Vai sonhando...", sdf.parse("26/10/2022"), new AuthorDTO(bob));
+		CommentDTO comment3 = new CommentDTO("Parabéns, velhote!", sdf.parse("26/10/2022"), new AuthorDTO(bob));
+		
+		post1.getComments().addAll(Arrays.asList(comment1, comment2));
+		post2.getComments().addAll(Arrays.asList(comment3));
+		
+		postRepository.saveAll(Arrays.asList(post1, post2));
+
 		estevao.getPosts().addAll(Arrays.asList(post1, post2));
 		userRepository.save(estevao);
 
